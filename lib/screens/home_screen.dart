@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import '../group_chats/group_chat_screen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../authentication/authentication_functions.dart';
 import './chat_screen.dart';
@@ -32,10 +33,8 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     if (state == AppLifecycleState.resumed) {
-      // online
       setStatus("Online");
     } else {
-      // offline
       setStatus("Offline");
     }
   }
@@ -58,7 +57,7 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
 
     await _firestore
         .collection('users')
-        .where("email", isEqualTo: _search.text)
+        .where("name", isEqualTo: _search.text)
         .get()
         .then((value) {
       setState(() {
@@ -152,6 +151,14 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
                     : Container(),
               ],
             ),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.group),
+        onPressed: () => Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (_) => GroupChatHomeScreen(),
+          ),
+        ),
+      ),
     );
   }
 }
