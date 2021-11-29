@@ -58,21 +58,27 @@ class _GroupChatHomeScreenState extends State<GroupChatHomeScreen> {
           : ListView.builder(
               itemCount: groupList.length,
               itemBuilder: (context, index) {
-                return ListTile(
-                  onTap: () => Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (_) => GroupChatRoom(
-                        groupName: groupList[index]['name'],
-                        groupChatId: groupList[index]['id'],
+                return Material(
+                  elevation: 6,
+                  borderRadius: BorderRadius.circular(12),
+                  child: ListTile(
+                    onTap: () => Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (_) => GroupChatRoom(
+                          groupName: groupList[index]['name'],
+                          groupChatId: groupList[index]['id'],
+                        ),
                       ),
                     ),
+                    leading: Icon(Icons.group),
+                    title: Text(groupList[index]['name']),
                   ),
-                  leading: Icon(Icons.group),
-                  title: Text(groupList[index]['name']),
                 );
               },
             ),
       floatingActionButton: FloatingActionButton(
+        backgroundColor: Colors.grey[800],
+        foregroundColor: Colors.grey[400],
         child: Icon(Icons.create),
         onPressed: () => Navigator.of(context).push(
           MaterialPageRoute(

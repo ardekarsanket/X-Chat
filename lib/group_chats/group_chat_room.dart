@@ -87,7 +87,7 @@ class GroupChatRoom extends StatelessWidget {
               ),
             ),
             Container(
-              height: size.height / 10,
+              height: size.height / 8,
               width: size.width,
               alignment: Alignment.center,
               child: Container(
@@ -137,7 +137,9 @@ class GroupChatRoom extends StatelessWidget {
               margin: EdgeInsets.symmetric(vertical: 5, horizontal: 8),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(15),
-                color: Colors.blue,
+                color: chatMap['sendBy'] == _auth.currentUser!.displayName
+                    ? Colors.redAccent
+                    : Colors.blueAccent,
               ),
               child: Column(
                 children: [

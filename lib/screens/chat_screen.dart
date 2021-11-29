@@ -142,7 +142,12 @@ class ChatRoom extends StatelessWidget {
                     Text(userMap['name']),
                     Text(
                       snapshot.data!['status'],
-                      style: TextStyle(fontSize: 14),
+                      style: TextStyle(
+                        fontSize: 14,
+                        color: snapshot.data!['status'] == 'Online'
+                            ? Colors.greenAccent
+                            : Colors.redAccent.withOpacity(0.9),
+                      ),
                     ),
                   ],
                 ),
@@ -233,7 +238,9 @@ class ChatRoom extends StatelessWidget {
               margin: EdgeInsets.symmetric(vertical: 5, horizontal: 8),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(15),
-                color: Colors.blue,
+                color: map['sendby'] == _auth.currentUser!.displayName
+                    ? Colors.redAccent
+                    : Colors.blueAccent,
               ),
               child: Text(
                 map['message'],

@@ -57,26 +57,30 @@ class _PersonalChatScreenState extends State<PersonalChatScreen> {
               child: ListView.builder(
                 itemCount: chatList.length,
                 itemBuilder: (context, index) {
-                  return ListTile(
-                    onTap: () => Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (_) => ChatRoom(
-                          chatRoomId: chatList[index]['id'],
-                          userMap: chatList[index]['usermap'],
+                  return Material(
+                    elevation: 6,
+                    borderRadius: BorderRadius.circular(12),
+                    child: ListTile(
+                      onTap: () => Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (_) => ChatRoom(
+                            chatRoomId: chatList[index]['id'],
+                            userMap: chatList[index]['usermap'],
+                          ),
                         ),
                       ),
-                    ),
-                    leading: Icon(Icons.account_box, color: Colors.black),
-                    title: Text(
-                      chatList[index]['usermap']['name'],
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 17,
-                        fontWeight: FontWeight.w500,
+                      leading: Icon(Icons.account_box, color: Colors.white),
+                      title: Text(
+                        chatList[index]['usermap']['name'],
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 17,
+                          fontWeight: FontWeight.w500,
+                        ),
                       ),
+                      subtitle: Text(chatList[index]['usermap']['email']),
+                      trailing: Icon(Icons.chat, color: Colors.white),
                     ),
-                    subtitle: Text(chatList[index]['usermap']['email']),
-                    trailing: Icon(Icons.chat, color: Colors.black),
                   );
                 },
               ),

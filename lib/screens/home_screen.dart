@@ -116,6 +116,10 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
                     height: size.height / 50,
                   ),
                   ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      elevation: 10,
+                      primary: Colors.redAccent.withOpacity(0.7),
+                    ),
                     onPressed: onSearch,
                     child: Text("Search"),
                   ),
@@ -160,6 +164,8 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
           Container(
             margin: EdgeInsets.fromLTRB(25, 0, 0, 0),
             child: FloatingActionButton(
+              backgroundColor: Colors.grey[800],
+              foregroundColor: Colors.grey[400],
               child: Icon(Icons.person),
               onPressed: () => Navigator.of(context).push(
                 MaterialPageRoute(
@@ -169,6 +175,8 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
             ),
           ),
           FloatingActionButton(
+            backgroundColor: Colors.grey[800],
+            foregroundColor: Colors.grey[400],
             child: Icon(Icons.groups),
             onPressed: () => Navigator.of(context).push(
               MaterialPageRoute(
