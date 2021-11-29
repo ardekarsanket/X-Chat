@@ -1,6 +1,6 @@
 import './authentication_functions.dart';
 import 'package:flutter/material.dart';
-
+import 'package:passwordfield/passwordfield.dart';
 import '../screens/home_screen.dart';
 
 class CreateAccount extends StatefulWidget {
@@ -13,6 +13,7 @@ class _CreateAccountState extends State<CreateAccount> {
   final TextEditingController _email = TextEditingController();
   final TextEditingController _password = TextEditingController();
   bool isLoading = false;
+  bool _isObscure = true;
 
   @override
   Widget build(BuildContext context) {
@@ -55,7 +56,7 @@ class _CreateAccountState extends State<CreateAccount> {
                   Container(
                     width: size.width / 1.1,
                     child: Text(
-                      "Create Account to Contiue!",
+                      "Create Account to Continue!",
                       style: TextStyle(
                         color: Colors.grey[700],
                         fontSize: 20,
@@ -77,14 +78,35 @@ class _CreateAccountState extends State<CreateAccount> {
                   Container(
                     width: size.width,
                     alignment: Alignment.center,
-                    child: field(size, "email", Icons.account_box, _email),
+                    child: field(size, "Email", Icons.account_box, _email),
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 18.0),
                     child: Container(
-                      width: size.width,
+                      width: 373,
                       alignment: Alignment.center,
-                      child: field(size, "password", Icons.lock, _password),
+                      child: TextField(
+                        controller: _password,
+                        obscureText: _isObscure,
+                        decoration: InputDecoration(
+                          border: OutlineInputBorder(
+                            borderSide: const BorderSide(
+                                color: Colors.white, width: 2.0),
+                            borderRadius: BorderRadius.circular(8.0),
+                          ),
+                          hintText: 'Password',
+                          prefixIcon: Icon(Icons.lock),
+                          suffixIcon: IconButton(
+                            icon: Icon(
+                              Icons.remove_red_eye,
+                              color: !_isObscure ? Colors.blue : Colors.grey,
+                            ),
+                            onPressed: () {
+                              setState(() => _isObscure = !_isObscure);
+                            },
+                          ),
+                        ),
+                      ),
                     ),
                   ),
                   SizedBox(
@@ -128,17 +150,13 @@ class _CreateAccountState extends State<CreateAccount> {
               });
               Navigator.push(
                   context, MaterialPageRoute(builder: (_) => HomeScreen()));
-              print("Account Created Sucessfull");
             } else {
-              print("Login Failed");
               setState(() {
                 isLoading = false;
               });
             }
           });
-        } else {
-          print("Please enter Fields");
-        }
+        } else {}
       },
       child: Container(
           height: size.height / 14,

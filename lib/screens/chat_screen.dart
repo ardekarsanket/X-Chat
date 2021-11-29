@@ -84,6 +84,36 @@ class ChatRoom extends StatelessWidget {
         "time": FieldValue.serverTimestamp(),
       };
 
+      String uid = _auth.currentUser!.uid;
+      await _firestore
+          .collection('users')
+          .doc(uid)
+          .collection('personal')
+          .doc(chatRoomId)
+          .set({
+        "id": chatRoomId,
+        "usermap": userMap,
+      });
+
+      uid = userMap['uid'];
+      Map<String, dynamic>? currentUser;
+      await _firestore
+          .collection('users')
+          .where("name", isEqualTo: _auth.currentUser!.displayName)
+          .get()
+          .then((value) {
+        currentUser = value.docs[0].data();
+      });
+      await _firestore
+          .collection('users')
+          .doc(uid)
+          .collection('personal')
+          .doc(chatRoomId)
+          .set({
+        "id": chatRoomId,
+        "usermap": currentUser,
+      });
+
       _message.clear();
       await _firestore
           .collection('chatroom')

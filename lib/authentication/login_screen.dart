@@ -12,6 +12,7 @@ class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController _email = TextEditingController();
   final TextEditingController _password = TextEditingController();
   bool isLoading = false;
+  bool _isObscure = false;
 
   @override
   Widget build(BuildContext context) {
@@ -73,9 +74,30 @@ class _LoginScreenState extends State<LoginScreen> {
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 18.0),
                     child: Container(
-                      width: size.width,
+                      width: 373,
                       alignment: Alignment.center,
-                      child: field(size, "password", Icons.lock, _password),
+                      child: TextField(
+                        controller: _password,
+                        obscureText: _isObscure,
+                        decoration: InputDecoration(
+                          border: OutlineInputBorder(
+                            borderSide: const BorderSide(
+                                color: Colors.white, width: 2.0),
+                            borderRadius: BorderRadius.circular(8.0),
+                          ),
+                          hintText: 'Password',
+                          prefixIcon: Icon(Icons.lock),
+                          suffixIcon: IconButton(
+                            icon: Icon(
+                              Icons.remove_red_eye,
+                              color: !_isObscure ? Colors.blue : Colors.grey,
+                            ),
+                            onPressed: () {
+                              setState(() => _isObscure = !_isObscure);
+                            },
+                          ),
+                        ),
+                      ),
                     ),
                   ),
                   SizedBox(

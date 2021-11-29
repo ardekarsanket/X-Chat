@@ -1,3 +1,5 @@
+import 'package:flutter/services.dart';
+
 import './group_info.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -14,6 +16,7 @@ class GroupChatRoom extends StatelessWidget {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
   void onSendMessage() async {
+    SystemChannels.textInput.invokeMethod('TextInput.hide');
     if (_message.text.isNotEmpty) {
       Map<String, dynamic> chatData = {
         "sendBy": _auth.currentUser!.displayName,

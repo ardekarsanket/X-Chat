@@ -4,6 +4,7 @@ import '../group_chats/group_chat_screen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../authentication/authentication_functions.dart';
 import './chat_screen.dart';
+import './personal_chat_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -74,7 +75,7 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text("Home Screen"),
+        title: Text("X-Chat"),
         actions: [
           IconButton(icon: Icon(Icons.logout), onPressed: () => logOut(context))
         ],
@@ -87,77 +88,95 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
                 child: CircularProgressIndicator(),
               ),
             )
-          : Column(
-              children: [
-                SizedBox(
-                  height: size.height / 20,
-                ),
-                Container(
-                  height: size.height / 14,
-                  width: size.width,
-                  alignment: Alignment.center,
-                  child: Container(
+          : SingleChildScrollView(
+              child: Column(
+                children: [
+                  SizedBox(
+                    height: size.height / 20,
+                  ),
+                  Container(
                     height: size.height / 14,
-                    width: size.width / 1.15,
-                    child: TextField(
-                      controller: _search,
-                      decoration: InputDecoration(
-                        hintText: "Search",
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10),
+                    width: size.width,
+                    alignment: Alignment.center,
+                    child: Container(
+                      height: size.height / 14,
+                      width: size.width / 1.15,
+                      child: TextField(
+                        controller: _search,
+                        decoration: InputDecoration(
+                          hintText: "Search",
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
                         ),
                       ),
                     ),
                   ),
-                ),
-                SizedBox(
-                  height: size.height / 50,
-                ),
-                ElevatedButton(
-                  onPressed: onSearch,
-                  child: Text("Search"),
-                ),
-                SizedBox(
-                  height: size.height / 30,
-                ),
-                userMap != null
-                    ? ListTile(
-                        onTap: () {
-                          String roomId = chatRoomId(
-                              _auth.currentUser!.displayName!,
-                              userMap!['name']);
+                  SizedBox(
+                    height: size.height / 50,
+                  ),
+                  ElevatedButton(
+                    onPressed: onSearch,
+                    child: Text("Search"),
+                  ),
+                  SizedBox(
+                    height: size.height / 30,
+                  ),
+                  userMap != null
+                      ? ListTile(
+                          onTap: () {
+                            String roomId = chatRoomId(
+                                _auth.currentUser!.displayName!,
+                                userMap!['name']);
 
-                          Navigator.of(context).push(
-                            MaterialPageRoute(
-                              builder: (_) => ChatRoom(
-                                chatRoomId: roomId,
-                                userMap: userMap!,
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (_) => ChatRoom(
+                                  chatRoomId: roomId,
+                                  userMap: userMap!,
+                                ),
                               ),
+                            );
+                          },
+                          leading: Icon(Icons.account_box, color: Colors.black),
+                          title: Text(
+                            userMap!['name'],
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 17,
+                              fontWeight: FontWeight.w500,
                             ),
-                          );
-                        },
-                        leading: Icon(Icons.account_box, color: Colors.black),
-                        title: Text(
-                          userMap!['name'],
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 17,
-                            fontWeight: FontWeight.w500,
                           ),
-                        ),
-                        subtitle: Text(userMap!['email']),
-                        trailing: Icon(Icons.chat, color: Colors.black),
-                      )
-                    : Container(),
-              ],
+                          subtitle: Text(userMap!['email']),
+                          trailing: Icon(Icons.chat, color: Colors.black),
+                        )
+                      : Container(),
+                ],
+              ),
             ),
-      floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.group),
-        onPressed: () => Navigator.of(context).push(
-          MaterialPageRoute(
-            builder: (_) => GroupChatHomeScreen(),
+      floatingActionButton: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Container(
+            margin: EdgeInsets.fromLTRB(25, 0, 0, 0),
+            child: FloatingActionButton(
+              child: Icon(Icons.person),
+              onPressed: () => Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (_) => PersonalChatScreen(),
+                ),
+              ),
+            ),
           ),
-        ),
+          FloatingActionButton(
+            child: Icon(Icons.groups),
+            onPressed: () => Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (_) => GroupChatHomeScreen(),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
